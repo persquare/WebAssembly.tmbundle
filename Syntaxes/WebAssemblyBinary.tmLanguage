@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>fileTypes</key>
+	<array>
+		<string>wasm</string>
+	</array>
+	<key>name</key>
+	<string>WebAssemblyBinary</string>
+	<key>scopeName</key>
+	<string>binary.wasm</string>
+	<key>uuid</key>
+	<string>C86B17FE-DFAB-4C04-86C7-D84881025DD1</string>
+</dict>
+</plist>
