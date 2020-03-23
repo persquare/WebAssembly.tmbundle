@@ -1,2 +1,2 @@
 # WebAssembly.tmbundle
-Tools for working with WebAssembly (.wat,.wasm) files
+Tools for working with WebAssembly (.wat,.wasm) files in TextMate2
