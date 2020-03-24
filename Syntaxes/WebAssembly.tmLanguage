@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>comment</key>
-	<string></string>
+	<string>Grammar for WebAssembly Text Format</string>
 	<key>fileTypes</key>
 	<array>
 		<string>wat</string>
@@ -13,154 +13,88 @@
 	<key>patterns</key>
 	<array>
 		<dict>
-			<key>begin</key>
-			<string>(^[ \t]+)?(?=;)</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.whitespace.comment.leading.wat</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>(?!\G)</string>
+			<key>include</key>
+			<string>#module</string>
+		</dict>
+	</array>
+	<key>repository</key>
+	<dict>
+		<key>comment</key>
+		<dict>
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>begin</key>
-					<string>;</string>
-					<key>beginCaptures</key>
-					<dict>
-						<key>0</key>
-						<dict>
-							<key>name</key>
-							<string>punctuation.definition.comment.wat</string>
-						</dict>
-					</dict>
-					<key>end</key>
-					<string>\n</string>
-					<key>name</key>
-					<string>comment.line.semicolon.wat</string>
+					<key>include</key>
+					<string>#comment_block</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#comment_line</string>
 				</dict>
 			</array>
 		</dict>
-		<dict>
-			<key>captures</key>
-			<dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>storage.type.function-type.wat</string>
-				</dict>
-				<key>4</key>
-				<dict>
-					<key>name</key>
-					<string>entity.name.function.wat</string>
-				</dict>
-			</dict>
-			<key>match</key>
-			<string>(\b(?i:(defun|defmethod|defmacro))\b)(\s+)((\w|\-|\!|\?)*)</string>
-			<key>name</key>
-			<string>meta.function.wat</string>
-		</dict>
-		<dict>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.constant.wat</string>
-				</dict>
-			</dict>
-			<key>match</key>
-			<string>(#|\?)(\w|[\\+-=&lt;&gt;'"&amp;#])+</string>
-			<key>name</key>
-			<string>constant.character.wat</string>
-		</dict>
-		<dict>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.variable.wat</string>
-				</dict>
-				<key>3</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.variable.wat</string>
-				</dict>
-			</dict>
-			<key>match</key>
-			<string>(\*)(\S*)(\*)</string>
-			<key>name</key>
-			<string>variable.other.global.wat</string>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>\b(?i:case|do|let|loop|if|else|when)\b</string>
-			<key>name</key>
-			<string>keyword.control.wat</string>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>\b(?i:eq|neq|and|or)\b</string>
-			<key>name</key>
-			<string>keyword.operator.wat</string>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>\b(?i:null|nil)\b</string>
-			<key>name</key>
-			<string>constant.language.wat</string>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>(?&lt;![-\w])(?i:cons|car|cdr|cond|lambda|format|setq|setf|quote|eval|append|list|listp|memberp|t|load|progn)(?![-\w])</string>
-			<key>name</key>
-			<string>support.function.wat</string>
-		</dict>
-		<dict>
-			<key>match</key>
-			<string>\b((0(x|X)[0-9a-fA-F]*)|(([0-9]+\.?[0-9]*)|(\.[0-9]+))((e|E)(\+|-)?[0-9]+)?)(L|l|UL|ul|u|U|F|f|ll|LL|ull|ULL)?\b</string>
-			<key>name</key>
-			<string>constant.numeric.wat</string>
-		</dict>
+		<key>comment_block</key>
 		<dict>
 			<key>begin</key>
-			<string>"</string>
+			<string>\(;</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>0</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.definition.string.begin.wat</string>
+					<string>punctuation.definition.comment.begin.wat</string>
 				</dict>
 			</dict>
 			<key>end</key>
-			<string>"</string>
+			<string>;\)</string>
 			<key>endCaptures</key>
 			<dict>
 				<key>0</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.definition.string.end.wat</string>
+					<string>punctuation.definition.comment.end.wat</string>
 				</dict>
 			</dict>
 			<key>name</key>
-			<string>string.quoted.double.wat</string>
+			<string>comment.block.wat</string>
+		</dict>
+		<key>comment_line</key>
+		<dict>
+			<key>begin</key>
+			<string>;;</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.comment.wat</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>\n</string>
+			<key>name</key>
+			<string>comment.line.wat</string>
+		</dict>
+		<key>leading_whitespace</key>
+		<dict>
+			<key>match</key>
+			<string>^\s*</string>
+			<key>name</key>
+			<string>meta.whitespace.leading</string>
+		</dict>
+		<key>module</key>
+		<dict>
+			<key>comment</key>
+			<string>the 'value' diagram at http://json.org</string>
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>match</key>
-					<string>\\.</string>
-					<key>name</key>
-					<string>constant.character.escape.wat</string>
+					<key>include</key>
+					<string>#comment</string>
 				</dict>
 			</array>
 		</dict>
-	</array>
+	</dict>
 	<key>scopeName</key>
 	<string>source.wat</string>
 	<key>uuid</key>
