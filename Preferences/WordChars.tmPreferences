@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>WordChars</string>
+	<key>scope</key>
+	<string>source.wat</string>
+	<key>settings</key>
+	<dict>
+		<key>wordCharacters</key>
+		<string>.</string>
+	</dict>
+	<key>uuid</key>
+	<string>2074B5EF-4A9E-41BD-A620-578C2CCAF7A5</string>
+</dict>
+</plist>

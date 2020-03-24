@@ -14,7 +14,15 @@
 	<array>
 		<dict>
 			<key>include</key>
-			<string>#module</string>
+			<string>#sexpr</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>#value</string>
+		</dict>
+		<dict>
+			<key>comment</key>
+			<string>#name</string>
 		</dict>
 	</array>
 	<key>repository</key>
@@ -75,6 +83,47 @@
 			<key>name</key>
 			<string>comment.line.wat</string>
 		</dict>
+		<key>float</key>
+		<dict>
+			<key>comment</key>
+			<string>handles decimal numbers</string>
+			<key>match</key>
+			<string>\b\d+\.(?:\d+)?\b</string>
+			<key>name</key>
+			<string>constant.numeric.float.wat</string>
+		</dict>
+		<key>hexnum</key>
+		<dict>
+			<key>comment</key>
+			<string>handles hexadecimal</string>
+			<key>match</key>
+			<string>\b(?:\+|-)?0x[\da-fA-F]+\b</string>
+			<key>name</key>
+			<string>constant.numeric.hexadecimal.wat</string>
+		</dict>
+		<key>int</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#num</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#hexnum</string>
+				</dict>
+			</array>
+		</dict>
+		<key>keyword</key>
+		<dict>
+			<key>comment</key>
+			<string>simple keywords</string>
+			<key>match</key>
+			<string>\b(func|param|result|local|global|table|elem|memory|data|start|typedef|import|imkind|export|exkind|module)\b</string>
+			<key>name</key>
+			<string>constant.language</string>
+		</dict>
 		<key>leading_whitespace</key>
 		<dict>
 			<key>match</key>
@@ -82,17 +131,217 @@
 			<key>name</key>
 			<string>meta.whitespace.leading</string>
 		</dict>
-		<key>module</key>
+		<key>name</key>
 		<dict>
 			<key>comment</key>
-			<string>the 'value' diagram at http://json.org</string>
+			<string>handles decimal numbers</string>
+			<key>match</key>
+			<string>\$[\S]+</string>
+			<key>name</key>
+			<string>entity.name.tag</string>
+		</dict>
+		<key>num</key>
+		<dict>
+			<key>comment</key>
+			<string>handles integer</string>
+			<key>match</key>
+			<string>\b(?:\+|-)?\d+(?!\.)\b</string>
+			<key>name</key>
+			<string>constant.numeric.integer.wat</string>
+		</dict>
+		<key>op</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#op_accessor</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#op_value</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#op_simple</string>
+				</dict>
+			</array>
+		</dict>
+		<key>op_accessor</key>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.storage</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>comment</key>
+					<string>meta.function</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>\b(local|global)(\.)(get|set|tee)\b</string>
+		</dict>
+		<key>op_simple</key>
+		<dict>
+			<key>comment</key>
+			<string>simple operands</string>
+			<key>match</key>
+			<string>\b(unreachable|nop|br|br_if|br_table|return|call|call_indirect|drop|select|block|end|if|then|else|loop)\b</string>
+			<key>name</key>
+			<string>keyword</string>
+		</dict>
+		<key>op_value</key>
+		<dict>
+			<key>captures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.storage</string>
+				</dict>
+				<key>3</key>
+				<dict>
+					<key>comment</key>
+					<string>meta.function</string>
+				</dict>
+			</dict>
+			<key>match</key>
+			<string>\b((?:i|f)(?:32|64))(\.)([a-zA-Z_][a-zA-Z_0-9]*)\b</string>
+		</dict>
+		<key>sexpr</key>
+		<dict>
+			<key>begin</key>
+			<string>\(</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.list.wat</string>
+				</dict>
+			</dict>
+			<key>comment</key>
+			<string>Top level</string>
+			<key>end</key>
+			<string>\)</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.list.wat</string>
+				</dict>
+			</dict>
 			<key>patterns</key>
 			<array>
 				<dict>
 					<key>include</key>
 					<string>#comment</string>
 				</dict>
+				<dict>
+					<key>include</key>
+					<string>#op</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#keyword</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#string</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#value</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#name</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#value_type</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#sexpr</string>
+				</dict>
 			</array>
+		</dict>
+		<key>string</key>
+		<dict>
+			<key>begin</key>
+			<string>"</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.begin.wat</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>"</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.string.end.wat</string>
+				</dict>
+			</dict>
+			<key>name</key>
+			<string>string.quoted.double.wat</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>\\(?:u\{[0-9a-fA-F]{4}\}|["'\\nt]|[0-9a-fA-F]{2})</string>
+					<key>name</key>
+					<string>constant.character.escape.wat</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\\.</string>
+					<key>name</key>
+					<string>invalid.illegal.unrecognized-string-escape.wat</string>
+				</dict>
+			</array>
+		</dict>
+		<key>value</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#float</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#int</string>
+				</dict>
+			</array>
+		</dict>
+		<key>value_type</key>
+		<dict>
+			<key>match</key>
+			<string>\b(?:i|f)(?:32|64)\b</string>
+			<key>name</key>
+			<string>support.type</string>
 		</dict>
 	</dict>
 	<key>scopeName</key>
